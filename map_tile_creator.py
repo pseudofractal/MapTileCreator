@@ -6,10 +6,10 @@ import os
 from os.path import join
 
 # Set the coordinates of the upper left and lower right corners of the image as floats
-upper_left = ('lat', 'lon')
-lower_right = ('lat', 'lon')
+upper_left = (20.251868645079536, 85.83039233400832)
+lower_right = (20.240856125680814, 85.84926189205369)
 
-latest_img = sorted(os.listdir('input'), key=lambda x: os.path.getmtime(os.path.join('input', x)))[0]
+latest_img = sorted(os.listdir('input'), key=lambda x: os.path.getmtime(os.path.join('input', x)))[-1]
 input_img = join('input', latest_img)
 dir_name = latest_img.split(".")[0]
 output_folder = join('output', dir_name)
@@ -31,7 +31,8 @@ def create_geotiff(image_path, output_folder, upper_left, lower_right):
         width=width,
         count=3,
         dtype=img_array.dtype,
-        crs='EPSG:4326',
+        #crs='EPSG:4326',
+        crs='EPSG:3857',
         transform=transform,
     ) as dst:
         for i in range(3):
